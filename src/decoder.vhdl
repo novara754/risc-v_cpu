@@ -58,6 +58,11 @@ begin
 				o_destination_register_write_enable <= '1';
 				o_immediate <= w_immediate_i;
 				o_use_immediate <= '1';
+			-- OP
+			when "0110011" =>
+				o_alu_operation <= alu_op_add when w_funct3 = "000" else alu_op_invalid;
+				o_destination_register_write_enable <= '1';
+				o_use_immediate <= '0';
 			-- Unknown
 			when others =>
 				-- empty

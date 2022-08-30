@@ -48,6 +48,20 @@ begin
 		) report time'image(now) & " test 1 failed" severity failure;
 		----------------------------------
 
+		-- TEST DECODE ADD INSTRUCTION --
+		report "TEST DECODE ADD INSTRUCTION" severity note;
+		r_instruction <= X"0021_8233";
+		wait for c_SMALL_TIME;
+
+		assert ((w_alu_operation = alu_op_add)
+			and (w_source_register1 = "00011")
+			and (w_source_register2 = "00010")
+			and (w_use_immediate = '0')
+			and (w_destination_register = "00100")
+			and (w_destination_register_write_enable = '1')
+		) report time'image(now) & " test 1 failed" severity failure;
+		----------------------------------
+
 		report "ALL TESTS FINISHED" severity note;
 
 		finish;
