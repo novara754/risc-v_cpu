@@ -38,9 +38,10 @@ architecture rtl of register_file is
 begin
 	process (i_clk)
 	begin
-		if rising_edge(i_clk) and i_write_enable = '1' then
-			r_registers(to_integer(i_in_register_idx)) <= i_in_data;
-			r_registers(0) <= (others => '0');
+		if rising_edge(i_clk) then
+			if i_write_enable = '1' and i_in_register_idx /= "00000" then
+				r_registers(to_integer(i_in_register_idx)) <= i_in_data;
+			end if;
 		end if;
 	end process;
 
