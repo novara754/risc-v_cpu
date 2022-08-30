@@ -9,7 +9,7 @@ entity decoder is
 		-- Instruction to decode
 		i_instruction : in t_data;
 		-- Operation selector to be forwarded to the ALU
-		o_alu_operation : out std_logic_vector(2 downto 0);
+		o_alu_operation : out t_alu_operation;
 		-- First source register index
 		o_source_register1 : out t_register_index;
 		-- Second source register index
@@ -44,7 +44,7 @@ begin
 	-- process (i_clk)
 	process (all)
 	begin
-		o_alu_operation <= "000";
+		o_alu_operation <= alu_op_invalid;
 		o_immediate <= (others => '0');
 		o_use_immediate <= '0';
 		o_destination_register_write_enable <= '0';
@@ -54,7 +54,7 @@ begin
 		case w_opcode is
 			-- OP-IMM
 			when "0010011" =>
-				o_alu_operation <= w_funct3;
+				o_alu_operation <= alu_op_add when w_funct3 = "000" else alu_op_invalid;
 				o_destination_register_write_enable <= '1';
 				o_immediate <= w_immediate_i;
 				o_use_immediate <= '1';

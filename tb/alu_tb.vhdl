@@ -10,7 +10,7 @@ entity alu_tb is
 end alu_tb;
 
 architecture rtl of alu_tb is
-	signal r_operation : std_logic_vector(2 downto 0) := (others => '0');
+	signal r_operation : t_alu_operation := alu_op_invalid;
 	signal r_operand1 : t_data := (others => '0');
 	signal r_operand2 : t_data := (others => '0');
 	signal w_result : t_data;
@@ -28,7 +28,7 @@ begin
 	begin
 		-- TEST SIMPLE ADDITION --
 		report "TEST SIMPLE ADDITION" severity note;
-		r_operation <= "000";
+		r_operation <= alu_op_add;
 		r_operand1 <= X"0000_1234";
 		r_operand2 <= X"00A0_500F";
 		wait for c_SMALL_TIME;

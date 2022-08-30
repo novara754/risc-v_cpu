@@ -15,7 +15,7 @@ end core;
 architecture rtl of core is
 	signal r_pc : t_address := (others => '0');
 
-	signal w_alu_operation : std_logic_vector(2 downto 0);
+	signal w_alu_operation : t_alu_operation;
 	signal w_source_register1 : t_register_index;
 	signal w_source_register2 : t_register_index;
 	signal w_immediate : t_data;

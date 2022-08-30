@@ -11,7 +11,7 @@ end decoder_tb;
 
 architecture rtl of decoder_tb is
 	signal r_instruction : t_data := (others => '0');
-	signal w_alu_operation : std_logic_vector(2 downto 0);
+	signal w_alu_operation : t_alu_operation;
 	signal w_source_register1 : t_register_index;
 	signal w_source_register2 : t_register_index;
 	signal w_immediate : t_data;
@@ -39,7 +39,7 @@ begin
 		r_instruction <= X"3E80_0093";
 		wait for c_SMALL_TIME;
 
-		assert ((w_alu_operation = "000")
+		assert ((w_alu_operation = alu_op_add)
 			and (w_source_register1 = "00000")
 			and (w_immediate = X"0000_03E8")
 			and (w_use_immediate = '1')

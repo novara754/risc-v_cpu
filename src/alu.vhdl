@@ -7,7 +7,7 @@ use work.risc_v.all;
 entity alu is
 	port (
 		-- Operation to perform on the input operands
-		i_operation : in std_logic_vector(2 downto 0);
+		i_operation : in t_alu_operation;
 		-- First operand value
 		i_operand1 : in t_data;
 		-- Second operand value
@@ -24,7 +24,7 @@ begin
 	begin
 		case i_operation is
 			-- Addition
-			when "000" =>
+			when alu_op_add =>
 				o_result <= i_operand1 + i_operand2;
 			when others =>
 				o_result <= (others => '0');
