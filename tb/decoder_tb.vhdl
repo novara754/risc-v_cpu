@@ -90,6 +90,18 @@ begin
 		) report time'image(now) & " test 4 failed" severity failure;
 		---------------------------------
 
+		-- TEST DECODE JAL INSTRUCTION --
+		report "TEST DECODE JAL INSTRUCTION" severity note;
+		r_instruction <= X"FF9F_F06F";
+		wait for c_SMALL_TIME;
+
+		assert ((w_alu_operation = alu_op_invalid)
+			and (w_immediate = X"FFFF_FFF8")
+			and (w_destination_register = "00000")
+			and (w_destination_register_write_enable = '1')
+		) report time'image(now) & " test 5 failed" severity failure;
+		----------------------------------
+
 		report "ALL TESTS FINISHED" severity note;
 
 		finish;

@@ -17,6 +17,7 @@ end core;
 
 architecture rtl of core is
 	signal r_pc : t_address := (others => '0');
+	signal w_next_pc : t_address;
 
 	signal w_alu_operation : t_alu_operation;
 	signal w_source_register1 : t_register_index;
@@ -24,6 +25,7 @@ architecture rtl of core is
 	signal w_immediate : t_data;
 	signal w_use_immediate : std_logic;
 	signal w_destination_register : t_register_index;
+	signal w_destination_register_data : t_data;
 	signal w_destination_register_write_enable : std_logic;
 	signal w_branch_condition : t_branch_condition;
 
@@ -62,7 +64,7 @@ begin
 			i_out_register_idx1 => w_source_register1,
 			i_out_register_idx2 => w_source_register2,
 			i_in_register_idx => w_destination_register,
-			i_in_data => w_alu_result,
+			i_in_data => w_destination_register_data,
 			i_write_enable => w_destination_register_write_enable,
 			o_out_register1 => w_operand1,
 			o_out_register2 => w_operand2
@@ -71,15 +73,19 @@ begin
 	process (i_clk)
 	begin
 		if rising_edge(i_clk) then
-			if w_branch_condition = branch_ne and w_alu_zero = '0' then
+			if w_branch_condition = branch_jump then
+				r_pc <= r_pc + w_immediate;
+			elsif w_branch_condition = branch_ne and w_alu_zero = '0' then
 				r_pc <= r_pc + w_immediate;
 			else
-				r_pc <= r_pc + 4;
+				r_pc <= w_next_pc;
 			end if;
 		end if;
 	end process;
 
+	w_next_pc <= r_pc + 4;
 	w_actual_operand2 <= w_immediate when w_use_immediate = '1' else w_operand2;
+	w_destination_register_data <= w_alu_result when w_branch_condition /= branch_jump else w_next_pc;
 
 	o_inst_address <= r_pc;
 	o_memory_address <= w_alu_result;

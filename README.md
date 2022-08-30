@@ -61,6 +61,7 @@ Supported instructions (RV32I):
  - [x] ADD
  - [x] BNE
  - [x] SW
+ - [x] JAL
  - [ ] SLTI
  - [ ] XORI
  - [ ] ORI
@@ -77,7 +78,6 @@ Supported instructions (RV32I):
  - [ ] SRA
  - [ ] OR
  - [ ] AND
- - [ ] JAL
  - [ ] JALR
  - [ ] BEQ
  - [ ] BLT

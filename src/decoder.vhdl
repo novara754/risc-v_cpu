@@ -40,6 +40,8 @@ architecture rtl of decoder is
 	signal w_immediate_b : t_data;
 	-- Immediate value (offset) for S-type instructions
 	signal w_immediate_s : t_data;
+	-- Immediate value (offset) for J-type instructions
+	signal w_immediate_j : t_data;
 begin
 	w_opcode <= std_logic_vector(i_instruction(6 downto 0));
 	w_funct3 <= std_logic_vector(i_instruction(14 downto 12));
@@ -60,6 +62,12 @@ begin
 		& i_instruction(30 downto 25)
 		& i_instruction(11 downto 8)
 		& i_instruction(7);
+	w_immediate_j <=
+		(11 downto 0 => i_instruction(31))
+		& i_instruction(19 downto 12)
+		& i_instruction(20)
+		& i_instruction(30 downto 21)
+		& '0';
 
 	-- process (i_clk)
 	process (all)
@@ -99,6 +107,11 @@ begin
 				o_immediate <= w_immediate_s;
 				o_use_immediate <= '1';
 				o_memory_write_enable <= '1';
+			-- JAL
+			when "1101111" =>
+				o_branch_condition <= branch_jump;
+				o_destination_register_write_enable <= '1';
+				o_immediate <= w_immediate_j;
 			-- Unknown
 			when others =>
 				-- empty
