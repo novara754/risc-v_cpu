@@ -66,7 +66,7 @@ begin
 		end if;
 	end process;
 
-	o_instruction <= r_memory(to_integer(i_inst_address));
+	o_instruction <= r_memory(to_integer(w_inst_offset));
 	o_out_data <= r_memory(to_integer(w_data_offset));
 
 	w_data_offset <= i_data_address(31 downto 2);
