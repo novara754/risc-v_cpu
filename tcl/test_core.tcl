@@ -8,6 +8,7 @@ read_vhdl ./src/core.vhdl
 
 # --- Simulation sources ---
 read_vhdl ./tb/core_tb.vhdl
+read_mem ./tb/core_tb_mem.bin
 
 # --- Use VHDL 2008 ---
 set_property file_type {VHDL 2008} [get_files *.vhdl]
