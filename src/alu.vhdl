@@ -13,7 +13,9 @@ entity alu is
 		-- Second operand value
 		i_operand2 : in t_data;
 		-- Result of the operation
-		o_result : out t_data
+		o_result : out t_data;
+		-- Whether or not the result is equal to zero
+		o_zero : out std_logic
 	);
 end alu;
 
@@ -23,11 +25,14 @@ begin
 	process (all)
 	begin
 		case i_operation is
-			-- Addition
 			when alu_op_add =>
 				o_result <= i_operand1 + i_operand2;
+			when alu_op_sub =>
+				o_result <= i_operand1 - i_operand2;
 			when others =>
 				o_result <= (others => '0');
 		end case;
 	end process;
+
+	o_zero <= '1' when o_result = X"0000_0000" else '0';
 end rtl;

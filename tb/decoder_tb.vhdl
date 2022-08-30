@@ -62,6 +62,20 @@ begin
 		) report time'image(now) & " test 1 failed" severity failure;
 		----------------------------------
 
+		-- TEST DECODE ADD INSTRUCTION --
+		report "TEST DECODE BNE INSTRUCTION" severity note;
+		r_instruction <= X"FE05_18E3";
+		wait for c_SMALL_TIME;
+
+		assert ((w_alu_operation = alu_op_sub)
+			and (w_source_register1 = "01010")
+			and (w_source_register2 = "00000")
+			and (w_immediate = X"FFFF_FFF0")
+			and (w_use_immediate = '0')
+			and (w_destination_register_write_enable = '0')
+		) report time'image(now) & " test 1 failed imm=" & integer'image(to_integer(w_immediate)) severity failure;
+		----------------------------------
+
 		report "ALL TESTS FINISHED" severity note;
 
 		finish;

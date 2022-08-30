@@ -22,11 +22,13 @@ architecture rtl of core is
 	signal w_use_immediate : std_logic;
 	signal w_destination_register : t_register_index;
 	signal w_destination_register_write_enable : std_logic;
+	signal w_branch_condition : t_branch_condition;
 
 	signal w_operand1 : t_data;
 	signal w_operand2 : t_data;
 	signal w_actual_operand2 : t_data;
 	signal w_alu_result : t_data;
+	signal w_alu_zero : std_logic;
 begin
 	decoder_inst : entity work.decoder(rtl)
 		port map (
@@ -37,7 +39,8 @@ begin
 			o_immediate => w_immediate,
 			o_use_immediate => w_use_immediate,
 			o_destination_register => w_destination_register,
-			o_destination_register_write_enable => w_destination_register_write_enable
+			o_destination_register_write_enable => w_destination_register_write_enable,
+			o_branch_condition => w_branch_condition
 		);
 
 	alu_inst : entity work.alu(rtl)
@@ -45,7 +48,8 @@ begin
 			i_operation => w_alu_operation,
 			i_operand1 => w_operand1,
 			i_operand2 => w_actual_operand2,
-			o_result => w_alu_result
+			o_result => w_alu_result,
+			o_zero => w_alu_zero
 		);
 
 	register_file_inst : entity work.register_file(rtl)
@@ -63,7 +67,11 @@ begin
 	process (i_clk)
 	begin
 		if rising_edge(i_clk) then
-			r_pc <= r_pc + 4;
+			if w_branch_condition = branch_ne and w_alu_zero = '0' then
+				r_pc <= r_pc + w_immediate;
+			else
+				r_pc <= r_pc + 4;
+			end if;
 		end if;
 	end process;
 

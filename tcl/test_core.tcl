@@ -16,3 +16,4 @@ set_property file_type {VHDL 2008} [get_files *.vhdl]
 save_project_as -force risc_v proj
 set_property top core_tb [get_fileset sim_1]
 start_gui
+launch_simulation -simset sim_1 -mode behavioral
