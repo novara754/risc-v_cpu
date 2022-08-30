@@ -24,7 +24,9 @@ entity decoder is
 		o_destination_register_write_enable : out std_logic;
 		-- If the instruction is a branch instruction this specifies the branch condition,
 		-- otherwise it is simply `branch_none`
-		o_branch_condition : out t_branch_condition
+		o_branch_condition : out t_branch_condition;
+		-- Write enable for memory access
+		o_memory_write_enable : out std_logic
 	);
 end decoder;
 
@@ -36,6 +38,8 @@ architecture rtl of decoder is
 	signal w_immediate_i : t_data;
 	-- Immediate value (offset) for B-type instructions
 	signal w_immediate_b : t_data;
+	-- Immediate value (offset) for S-type instructions
+	signal w_immediate_s : t_data;
 begin
 	w_opcode <= std_logic_vector(i_instruction(6 downto 0));
 	w_funct3 <= std_logic_vector(i_instruction(14 downto 12));
@@ -51,6 +55,11 @@ begin
 		& i_instruction(30 downto 25)
 		& i_instruction(11 downto 8)
 		& '0';
+	w_immediate_s <=
+		(20 downto 0 => i_instruction(31))
+		& i_instruction(30 downto 25)
+		& i_instruction(11 downto 8)
+		& i_instruction(7);
 
 	-- process (i_clk)
 	process (all)
@@ -60,6 +69,7 @@ begin
 		o_use_immediate <= '0';
 		o_destination_register_write_enable <= '0';
 		o_branch_condition <= branch_none;
+		o_memory_write_enable <= '0';
 
 		-- See Ch. 19 of the RISC-V specification for details
 		-- on instruction encodings
@@ -82,6 +92,13 @@ begin
 				o_immediate <= w_immediate_b;
 				o_use_immediate <= '0';
 				o_branch_condition <= branch_ne when w_funct3 = "001" else branch_none;
+			-- STORE
+			when "0100011" =>
+				o_alu_operation <= alu_op_add;
+				o_destination_register_write_enable <= '0';
+				o_immediate <= w_immediate_s;
+				o_use_immediate <= '1';
+				o_memory_write_enable <= '1';
 			-- Unknown
 			when others =>
 				-- empty

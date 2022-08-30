@@ -13,14 +13,18 @@ architecture rtl of core_tb is
 	signal r_clk : std_logic := '0';
 	signal w_instruction : t_data;
 	signal w_inst_address : t_data;
-
-
+	signal w_data_address : t_address;
+	signal w_memory_write_data : t_data;
+	signal w_memory_write_enable : std_logic;
 begin
 	uut : entity work.core(rtl)
 		port map (
 			i_clk => r_clk,
 			i_instruction => w_instruction,
-			o_inst_address => w_inst_address
+			o_inst_address => w_inst_address,
+			o_memory_address => w_data_address,
+			o_memory_write_data => w_memory_write_data,
+			o_memory_write_enable => w_memory_write_enable
 		);
 
 	program_memory : entity work.memory(rtl)
@@ -32,11 +36,12 @@ begin
 			i_inst_address => w_inst_address,
 			o_instruction => w_instruction,
 
+			i_data_address => w_data_address,
+			i_in_data => w_memory_write_data,
+			i_write_mask => "1111",
+			i_write_enable => w_memory_write_enable,
+
 			-- Unused
-			i_data_address => X"0000_0000",
-			i_in_data => X"0000_0000",
-			i_write_mask => "0000",
-			i_write_enable => '0',
 			o_out_data => open
 		);
 
@@ -46,21 +51,4 @@ begin
 		wait for c_CLOCK_HALF_PERIOD;
 		r_clk <= not r_clk;
 	end process;
-
-	-- TEST : process
-	-- 	constant c_SMALL_TIME : time := 5 ns;
-	-- 	alias a_program_index : unsigned(29 downto 0) is w_inst_address(31 downto 2);
-	-- begin
-	-- 	if a_program_index < 9 then
-	-- 		r_instruction <= r_program(to_integer(a_program_index));
-	-- 	else
-	-- 		r_instruction <= X"0000_0000";
-	-- 	end if;
-
-	-- 	wait for c_SMALL_TIME;
-
-	-- 	report "ALL TESTS FINISHED" severity note;
-
-	-- 	--finish;
-	-- end process;
 end rtl;

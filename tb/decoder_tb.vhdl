@@ -76,6 +76,20 @@ begin
 		) report time'image(now) & " test 3 failed" severity failure;
 		----------------------------------
 
+		-- TEST DECODE SW INSTRUCTION --
+		report "TEST DECODE SW INSTRUCTION" severity note;
+		r_instruction <= X"4C11_2923";
+		wait for c_SMALL_TIME;
+
+		assert ((w_alu_operation = alu_op_add)
+			and (w_source_register1 = "00010")
+			and (w_source_register2 = "00001")
+			and (w_immediate = X"0000_04D2")
+			and (w_use_immediate = '1')
+			and (w_destination_register_write_enable = '0')
+		) report time'image(now) & " test 4 failed" severity failure;
+		---------------------------------
+
 		report "ALL TESTS FINISHED" severity note;
 
 		finish;

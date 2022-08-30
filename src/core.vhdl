@@ -8,7 +8,10 @@ entity core is
 	port (
 		i_clk : in std_logic;
 		i_instruction : in t_data;
-		o_inst_address : out t_address
+		o_inst_address : out t_address;
+		o_memory_address : out t_address;
+		o_memory_write_data : out t_data;
+		o_memory_write_enable : out std_logic
 	);
 end core;
 
@@ -40,7 +43,8 @@ begin
 			o_use_immediate => w_use_immediate,
 			o_destination_register => w_destination_register,
 			o_destination_register_write_enable => w_destination_register_write_enable,
-			o_branch_condition => w_branch_condition
+			o_branch_condition => w_branch_condition,
+			o_memory_write_enable => o_memory_write_enable
 		);
 
 	alu_inst : entity work.alu(rtl)
@@ -78,4 +82,6 @@ begin
 	w_actual_operand2 <= w_immediate when w_use_immediate = '1' else w_operand2;
 
 	o_inst_address <= r_pc;
+	o_memory_address <= w_alu_result;
+	o_memory_write_data <= w_operand2;
 end rtl;

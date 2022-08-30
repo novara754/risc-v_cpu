@@ -60,6 +60,7 @@ Supported instructions (RV32I):
  - [x] ADDI
  - [x] ADD
  - [x] BNE
+ - [x] SW
  - [ ] SLTI
  - [ ] XORI
  - [ ] ORI
@@ -86,7 +87,6 @@ Supported instructions (RV32I):
  - [ ] LW
  - [ ] LH
  - [ ] LB
- - [ ] SW
  - [ ] SH
  - [ ] SB
  - [ ] LUI
