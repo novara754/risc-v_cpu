@@ -59,7 +59,7 @@ begin
 			and (w_use_immediate = '0')
 			and (w_destination_register = "00100")
 			and (w_destination_register_write_enable = '1')
-		) report time'image(now) & " test 1 failed" severity failure;
+		) report time'image(now) & " test 2 failed" severity failure;
 		----------------------------------
 
 		-- TEST DECODE ADD INSTRUCTION --
@@ -73,7 +73,7 @@ begin
 			and (w_immediate = X"FFFF_FFF0")
 			and (w_use_immediate = '0')
 			and (w_destination_register_write_enable = '0')
-		) report time'image(now) & " test 1 failed imm=" & integer'image(to_integer(w_immediate)) severity failure;
+		) report time'image(now) & " test 3 failed" severity failure;
 		----------------------------------
 
 		report "ALL TESTS FINISHED" severity note;
