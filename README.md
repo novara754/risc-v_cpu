@@ -22,7 +22,7 @@ the ISA itself, which will be complicated enough.
 
 ## Structural Overview
 
-This repository contains three major subdirectories: `src/`, `tb/` and `tcl/`.
+This repository contains two subdirectories: `src/` and `tb/`.
 
 The `src/` subdirectory contains the synthesisable modules to implement the RISC-V CPU.
 Currently these are...
@@ -42,15 +42,19 @@ The `definitions.vhdl` file contains common type definitions used by each of the
 
 Testbenches can be found in the `tb/` subdirectory. These testbenches provide behavioral tests 
 for each of the previously described modules. These are mostly automated and will compare the
-modules' outputs to expected outputs, failing if they do not match. The `core_tb` testbench
-however is not automated yet and requires human supervision.
-The testbenches can be executed using the TCL scripts located in the `tcl/` subdirectory.
-These scripts are written to work with [Xilinx Vivado](https://www.xilinx.com/support/download.html),
-a mostly free IDE.
-The scripts can be invoked as follows:
-```
-$ vivado -nolog -nojournal -mode batch -source ./tcl/<file>.tcl
-```
+modules' outputs to expected outputs, failing if they do not match.
+
+The testbenches are written using [cocotb](https://www.cocotb.org/). Please follow the installation
+instructions in the [cocotb documentation](https://docs.cocotb.org/en/stable/install.html).
+The simulator used for the testbenches is [GHDL](https://ghdl.github.io/ghdl/getting.html) which
+also needs to be installed accordingly. It is important to install at least version 2.0.0
+of GHDL. You can install GHDL from source to ensure you are using the latest version. 
+
+To execute the testbenches you need to run `make` in the root directory of this repository.
+This will automatically scan each subdirectory of the `tb/` directory and execute each test script.
+The result of all tests will written to the console output.
+Individual tests can be executed by using `make tb/<sub>` where `<sub>` is the name of the 
+subdirectory of the respective test you wish to run.
 
 ## Progress
 
