@@ -1,4 +1,4 @@
-TESTBENCHES := tb/decoder tb/alu tb/memory tb/register_file
+TESTBENCHES := tb/decoder tb/alu tb/memory tb/register_file tb/core
 
 .PHONY: $(TESTBENCHES)
 
@@ -6,6 +6,7 @@ TESTBENCHES := tb/decoder tb/alu tb/memory tb/register_file
 all: $(TESTBENCHES)
 
 $(TESTBENCHES):
+	@cd $@ && $(MAKE) prepare
 	@cd $@ && $(MAKE)
 
 .PHONY: clean
