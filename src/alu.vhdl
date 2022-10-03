@@ -20,19 +20,20 @@ entity alu is
 end alu;
 
 architecture rtl of alu is
-
+	signal r_result : t_data := X"0000_0000";
 begin
 	process (all)
 	begin
 		case i_operation is
 			when alu_op_add =>
-				o_result <= i_operand1 + i_operand2;
+				r_result <= i_operand1 + i_operand2;
 			when alu_op_sub =>
-				o_result <= i_operand1 - i_operand2;
+				r_result <= i_operand1 - i_operand2;
 			when others =>
-				o_result <= (others => '0');
+				r_result <= X"0000_0000";
 		end case;
 	end process;
 
-	o_zero <= '1' when o_result = X"0000_0000" else '0';
+	o_result <= r_result;
+	o_zero <= '1' when r_result = X"0000_0000" else '0';
 end rtl;
