@@ -11,10 +11,10 @@ async def write_disabled(dut):
     dut.i_in_data.value = 0x39AF_4321
     dut.i_write_enable.value = 0
 
-    # await RisingEdge(dut.i_clk)
-    await Timer(50, units="ns")
+    await RisingEdge(dut.i_clk)
 
     dut.i_out_register_idx1.value = 14
+    await Timer(1, units="ns")
     assert dut.o_out_register1.value == 0x0000_0000
 
 

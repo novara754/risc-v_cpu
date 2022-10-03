@@ -1,6 +1,6 @@
 # [WIP] RISC-V CPU 
 
-Implementation of a RISC-V CPU in VHDL.
+Implementation of a RISC-V CPU in SystemVerilog.
 
 RISC-V is a fully free and open ISA (instruction set architecture) that is gaining popularity,
 especially in hobbyist spheres.
@@ -38,7 +38,7 @@ Currently these are...
   - the `core` which combines the `register_file`, `decoder`, `alu`, and a program counter
   register and interconnects these parts to allow execution of instruction streams.
 
-The `definitions.vhdl` file contains common type definitions used by each of the modules.
+The `definitions.sv` file contains common type definitions used by each of the modules.
 
 Testbenches can be found in the `tb/` subdirectory. These testbenches provide behavioral tests 
 for each of the previously described modules. These are mostly automated and will compare the
@@ -46,9 +46,9 @@ modules' outputs to expected outputs, failing if they do not match.
 
 The testbenches are written using [cocotb](https://www.cocotb.org/). Please follow the installation
 instructions in the [cocotb documentation](https://docs.cocotb.org/en/stable/install.html).
-The simulator used for the testbenches is [GHDL](https://ghdl.github.io/ghdl/getting.html) which
-also needs to be installed accordingly. It is important to install at least version 2.0.0
-of GHDL. You can install GHDL from source to ensure you are using the latest version. 
+The simulator used for the testbenches is [Icarus Verilog](https://iverilog.icarus.com/) which also
+needs to be installed accordingly. To make sure you get the latest version I recommend downloading
+and building it from source.
 
 To execute the testbenches you need to run `make` in the root directory of this repository.
 This will automatically scan each subdirectory of the `tb/` directory and execute each test script.

@@ -1,10 +1,9 @@
 # SIM_BUILD ?=  ../../tb_output/sim_build
 
-SIM ?= ghdl
-EXTRA_ARGS ?= --std=08
-TOPLEVEL_LANG ?= vhdl
+SIM ?= icarus
+TOPLEVEL_LANG ?= verilog
 
-VHDL_SOURCES += $(PWD)/../../src/definitions.vhdl $(PWD)/../../src/$(TEST_NAME).vhdl
+VERILOG_SOURCES += $(PWD)/../../src/definitions.sv $(PWD)/../../src/$(TEST_NAME).sv
 TOPLEVEL = $(TEST_NAME)
 MODULE = test
 COCOTB_RESULTS_FILE ?= ../../tb_output/$(TEST_NAME)_results.xml
