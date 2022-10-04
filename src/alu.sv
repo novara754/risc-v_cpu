@@ -19,6 +19,9 @@ module alu (
 			ALU_OP_XOR: o_result = i_operand1 ^ i_operand2;
 			ALU_OP_OR: o_result = i_operand1 | i_operand2;
 			ALU_OP_AND: o_result = i_operand1 & i_operand2;
+			ALU_OP_SHIFT_LEFT: o_result = i_operand1 << i_operand2;
+			ALU_OP_SHIFT_RIGHT_LOGIC: o_result = i_operand1 >> i_operand2;
+			ALU_OP_SHIFT_RIGHT_ARITH: o_result = $signed(i_operand1) >>> i_operand2;
 			default: o_result = 0;
 		endcase
 	end

@@ -8,7 +8,10 @@ package definitions;
 		ALU_OP_SUB,
 		ALU_OP_XOR,
 		ALU_OP_OR,
-		ALU_OP_AND
+		ALU_OP_AND,
+		ALU_OP_SHIFT_LEFT,
+		ALU_OP_SHIFT_RIGHT_LOGIC,
+		ALU_OP_SHIFT_RIGHT_ARITH
 	} t_alu_operation;
 	typedef enum {BRANCH_NONE, BRANCH_JUMP, BRANCH_NE} t_branch_condition;
 endpackage
