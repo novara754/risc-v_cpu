@@ -26,6 +26,18 @@ module core(
 
 	t_branch_condition w_branch_condition;
 
+	logic w_destination_register_write_enable;
+	t_register_index w_source_register_idx1, w_source_register_idx2, w_destination_register_idx;
+
+	logic w_use_immediate;
+	t_data w_immediate;
+
+	t_alu_operation w_alu_operation;
+	t_data w_alu_result;
+	logic w_alu_zero;
+
+	logic w_register_write_enable;
+
 	always_ff@(posedge i_clk, posedge i_reset) begin
 		if (i_reset) begin
 			r_pc = 32'b0;
@@ -63,17 +75,6 @@ module core(
 		end
 	end
 
-	logic w_destination_register_write_enable;
-	t_register_index w_source_register_idx1, w_source_register_idx2, w_destination_register_idx;
-
-	logic w_use_immediate;
-	t_data w_immediate;
-
-	t_alu_operation w_alu_operation;
-	t_data w_alu_result;
-	logic w_alu_zero;
-
-	logic w_register_write_enable;
 	assign w_register_write_enable = r_current_stage == STAGE_EXECUTE
 		&& w_destination_register_write_enable;
 
