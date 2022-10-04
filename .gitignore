@@ -1,3 +1,4 @@
 tb/**/__pycache__
 tb/**/sim_build
+tb/**/progs/build
 tb_output/
