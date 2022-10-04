@@ -16,6 +16,9 @@ module alu (
 		case (i_operation)
 			ALU_OP_ADD: o_result = i_operand1 + i_operand2;
 			ALU_OP_SUB: o_result = i_operand1 - i_operand2;
+			ALU_OP_XOR: o_result = i_operand1 ^ i_operand2;
+			ALU_OP_OR: o_result = i_operand1 | i_operand2;
+			ALU_OP_AND: o_result = i_operand1 & i_operand2;
 			default: o_result = 0;
 		endcase
 	end
