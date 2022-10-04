@@ -62,17 +62,17 @@ Exceptions are not yet supported.
 
 Supported instructions (RV32I):
  - [x] ADDI
+ - [x] XORI
+ - [x] ORI
+ - [x] ANDI
+ - [x] SLLI
+ - [x] SRLI
+ - [x] SRAI
  - [x] ADD
  - [x] BNE
  - [x] SW
  - [x] JAL
  - [ ] SLTI
- - [ ] XORI
- - [ ] ORI
- - [ ] ANDI
- - [ ] SLLI
- - [ ] SRLI
- - [ ] SRAI
  - [ ] SUB
  - [ ] SLL
  - [ ] SLT

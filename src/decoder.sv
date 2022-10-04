@@ -66,9 +66,23 @@ module decoder(
 		case (w_opcode)
 			// OP-IMM
 			7'b0010011: begin
-				o_alu_operation = (w_funct3 == 3'b000) ? ALU_OP_ADD : ALU_OP_INVALID;
-				o_destination_register_write_enable = 1'b1;
 				o_immediate = w_i_immediate;
+				case (w_funct3)
+					3'b000: o_alu_operation = ALU_OP_ADD;
+					3'b100: o_alu_operation = ALU_OP_XOR;
+					3'b110: o_alu_operation = ALU_OP_OR;
+					3'b111: o_alu_operation = ALU_OP_AND;
+					3'b001: o_alu_operation = ALU_OP_SHIFT_LEFT;
+					3'b101: begin
+						// Remove errneous bit due to SRAI encoding
+						o_immediate[10] = 1'b0;
+						o_alu_operation = i_instruction[30]
+							? ALU_OP_SHIFT_RIGHT_ARITH
+							: ALU_OP_SHIFT_RIGHT_LOGIC;
+					end
+					default: o_alu_operation = ALU_OP_INVALID;
+				endcase
+				o_destination_register_write_enable = 1'b1;
 				o_use_immediate = 1'b1;
 			end
 			// OP
