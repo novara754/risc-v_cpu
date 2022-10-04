@@ -95,7 +95,7 @@ module decoder(
 			end
 			// JAL
 			7'b1101111: begin
-				o_branch_condition <= BRANCH_JUMP;
+				o_branch_condition = BRANCH_JUMP;
 				o_destination_register_write_enable = 1'b1;
 				o_immediate = w_j_immediate;
 			end
