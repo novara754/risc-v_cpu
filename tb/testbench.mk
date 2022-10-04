@@ -11,3 +11,7 @@ MODULE = test
 COCOTB_RESULTS_FILE ?= ../../tb_output/$(TEST_NAME)_results.xml
 
 include $(shell cocotb-config --makefiles)/Makefile.sim
+
+.PHONY:
+prepare:
+	@echo "no prepare"
