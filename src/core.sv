@@ -15,12 +15,6 @@ module core(
 	t_data w_next_pc;
 	t_data r_current_instruction;
 
-	initial begin
-		r_pc = 32'b0;
-		r_current_instruction = 32'b0;
-		r_current_stage = STAGE_FETCH_INSTRUCTION;
-	end
-
 	t_data r_operand1, r_operand2, w_actual_operand2;
 	t_data w_out_register1, w_out_register2;
 
