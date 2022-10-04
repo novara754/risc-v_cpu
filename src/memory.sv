@@ -66,10 +66,12 @@ module memory(
 	assign o_out_data = r_memory[w_data_offset];
 
 	`ifdef COCOTB_SIM
+	`ifdef TEST_memory
 	initial begin
 		$dumpfile("../../tb_output/memory.vcd");
 		$dumpvars(0, memory);
 		#1;
 	end
+	`endif
 	`endif
 endmodule

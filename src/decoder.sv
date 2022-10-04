@@ -111,10 +111,12 @@ module decoder(
 	end
 
 	`ifdef COCOTB_SIM
+	`ifdef TEST_decoder
 	initial begin
 		$dumpfile("../../tb_output/decoder.vcd");
 		$dumpvars(0, decoder);
 		#1;
 	end
+	`endif
 	`endif
 endmodule
