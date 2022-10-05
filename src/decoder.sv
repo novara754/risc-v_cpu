@@ -31,6 +31,9 @@ module decoder(
 	logic [2:0] w_funct3;
 	assign w_funct3 = i_instruction[14:12];
 
+	logic [6:0] w_funct7;
+	assign w_funct7 = i_instruction[31:25];
+
 	assign o_source_register1 = i_instruction[19:15];
 	assign o_source_register2 = i_instruction[24:20];
 	assign o_destination_register = i_instruction[11:7];
@@ -78,9 +81,11 @@ module decoder(
 					3'b101: begin
 						// Remove errneous bit due to SRAI encoding
 						o_immediate[10] = 1'b0;
-						o_alu_operation = i_instruction[30]
-							? ALU_OP_SHIFT_RIGHT_ARITH
-							: ALU_OP_SHIFT_RIGHT_LOGIC;
+						if (w_funct7 == 7'b0) begin
+							o_alu_operation = ALU_OP_SHIFT_RIGHT_LOGIC;
+						end else begin
+							o_alu_operation = ALU_OP_SHIFT_RIGHT_ARITH;
+						end
 					end
 					default: o_alu_operation = ALU_OP_INVALID;
 				endcase
