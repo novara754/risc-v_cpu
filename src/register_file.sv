@@ -1,3 +1,5 @@
+`default_nettype none
+
 import definitions::*;
 
 // Register file for general purpose registers of a

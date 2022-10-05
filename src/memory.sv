@@ -1,3 +1,5 @@
+`default_nettype none
+
 import definitions::*;
 
 // Memory block allowing simulatenous access to

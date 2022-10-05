@@ -1,3 +1,5 @@
+`default_nettype none
+
 import definitions::*;
 
 module alu (

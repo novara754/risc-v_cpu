@@ -1,3 +1,5 @@
+`default_nettype none
+
 package definitions;
 	typedef logic [31:0] t_data;
 	typedef logic [31:0] t_address;
